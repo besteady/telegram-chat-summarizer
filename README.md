@@ -1,5 +1,12 @@
 # Telegram Chat Summarizer App
 
+Разница с оригинальным репозиторием будет заключаться в двух вещах:
+
+1) не будет рассылки по разным пользователям телеграма, пишем просто в отдельный канал
+2) будет использоваться локальный ллм, через ollama
+
+По сути флоу использования будет следующим: мы запускаем скрипт на компьютере и генерим суммаризации для непрочитанных чатов. После вручную отмечаем чаты прочитанными.
+
 **Are you sick of skimming through tons of Telegram messages daily looking for the valuable info? The salvation is here!**
 
 This repository hosts an implementation of a Telegram application which monitors and summarizes group chats. Initially
