@@ -7,6 +7,15 @@
 
 По сути флоу использования будет следующим: мы запускаем скрипт на компьютере и генерим суммаризации для непрочитанных чатов. После вручную отмечаем чаты прочитанными.
 
+app.py - для каждого чата, заданного в конфиге, запускаем суммаризирующую джобу по таймингу.
+communication.py - два класса для получения сообщений и для отправки готовых суммаризаций через телеграм апи.
+example_config.json - структура необходимого конфига.
+prompts/example_summarization_prompt.txt - пример промта для ллм.
+summarization.py - класс суммаризатор ходящий в ллм через langchain.
+
+Для ollama использовать https://python.langchain.com/v0.2/docs/integrations/llms/ollama/. Но стоит проверить есть ли более лучшие подели.
+Какая лучшая локальная модель для суммаризаций на русском? Mistral мб.
+
 **Are you sick of skimming through tons of Telegram messages daily looking for the valuable info? The salvation is here!**
 
 This repository hosts an implementation of a Telegram application which monitors and summarizes group chats. Initially

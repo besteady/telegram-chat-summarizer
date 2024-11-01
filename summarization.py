@@ -39,5 +39,5 @@ class Summarizer:
 
     @staticmethod
     def validate_summarization_prompt(summarization_prompt):
-        if not "{text_to_summarize}" in summarization_prompt:
+        if "{text_to_summarize}" not in summarization_prompt:
             raise RuntimeError("Summarization prompt should include \"{ text_to_summarize }\"")

@@ -57,7 +57,7 @@ if __name__ == "__main__":
     def chat_callback(input_message_text, sender, context_name, send_message_func):
         with llm_contexts_lock:
             envoy_bot.set_typing_status([sender], llm_contexts_lock.locked)
-            if not context_name in llm_contexts or not sender in llm_contexts[context_name]:
+            if context_name not in llm_contexts or sender not in llm_contexts[context_name]:
                 send_message_func(f"No context is available for {context_name} yet")
                 return
             logger.info(f"Chatting with: {sender}")
@@ -83,7 +83,7 @@ if __name__ == "__main__":
             envoy_bot.set_typing_status(summary_receivers, llm_contexts_lock.locked)
 
             # Scrap messages for the given chat
-            messages, chat_title= group_chat_scrapper.get_message_history(chat_cfg.id, chat_cfg.lookback_period_seconds)
+            messages, chat_title = group_chat_scrapper.get_message_history(chat_cfg.id, chat_cfg.lookback_period_seconds)
             logger.debug(
                 f"Scrapped {len(messages)} messages for {chat_cfg.id} over the last {chat_cfg.lookback_period_seconds} seconds")
             serialized_messages = json.dumps({"messages": messages}, ensure_ascii=False)

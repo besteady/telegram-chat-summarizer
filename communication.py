@@ -45,7 +45,7 @@ class GroupChatScrapper:
             if message.date < datetime_from:
                 break
             if not message.text:
-                logging.warning(f"Non-text message skipped, summarization result might be affected")
+                logging.warning("Non-text message skipped, summarization result might be affected")
                 continue
             sender = message.get_sender()
             data = {
@@ -83,7 +83,7 @@ class EnvoyBot:
         self.bot_thread.start()
 
     def send_summary(self, username, text, chat_id):
-        if not username in self.verified_receivers:
+        if username not in self.verified_receivers:
             self.logger.info(f"User {username} is not yet verified")
             return
         self.bot.send_message(self.verified_receivers[username], text, parse_mode="HTML")
@@ -109,7 +109,7 @@ class EnvoyBot:
             if not message.text:
                 return
             sender = message.from_user.username
-            if not sender or not sender in self.telegram_summary_receivers:
+            if not sender or sender not in self.telegram_summary_receivers:
                 self.logger.warning(f"Unauthorized usage attempt from user: {str(message.from_user)}")
                 return
             if message.text.startswith("/"):
@@ -119,7 +119,7 @@ class EnvoyBot:
                     self.bot.send_message(message.chat.id, "You are now verified and will receive generated summaries")
                     return
                 else:
-                    if not message.text in self.allowed_commands:
+                    if message.text not in self.allowed_commands:
                         self.bot.send_message(message.chat.id,
                                               "Invalid command, valid commands are: " + ", ".join(
                                                   self.allowed_commands))
@@ -127,7 +127,7 @@ class EnvoyBot:
                     self.set_current_user_context(sender, message.text[1:])
                     self.bot.send_message(message.chat.id, f"Switched context to {self.current_user_contexts[sender]}")
             else:
-                if not sender in self.current_user_contexts:
+                if sender not in self.current_user_contexts:
                     self.bot.send_message(message.chat.id,
                                           "Select context first, valid commands are: " + ", ".join(
                                               self.allowed_commands))
